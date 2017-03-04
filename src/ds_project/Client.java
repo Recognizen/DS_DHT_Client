@@ -39,11 +39,11 @@ public class Client {
                 System.out.println("\nOperation requested: LEAVE\n");
                 operation = "leave";
             } else if (args.length == 5 && args[3].equals("read")) {
-                System.out.println("\nOperation requested: GET - Key requested: " + args[4] +"\n");
+                System.out.println("\nOperation requested: GET - Key requested: " + args[4] + "\n");
                 operation = "read";
                 key = Integer.valueOf(args[4]);
             } else if (args.length == 6 && args[3].equals("write")) {
-                System.out.println("\nOperation requested: WRITE - Key requested:" + args[4] + " New value: " + args[5]+ "\n");
+                System.out.println("\nOperation requested: WRITE - Key requested:" + args[4] + " New value: " + args[5] + "\n");
                 operation = "write";
                 key = Integer.valueOf(args[4]);
                 value = args[5];
@@ -63,6 +63,7 @@ public class Client {
         public void preStart() throws InterruptedException {
             if (remotePath != null && operation != null) {
                 ActorSelection coordinator = context().actorSelection(remotePath);
+
                 System.out.println("--- Sending " + operation
                         + " request message to " + remotePath + " ---");
 
@@ -84,14 +85,16 @@ public class Client {
             //When receiving a DataItem as response (richiesta Get)
             if (message instanceof DataItem) {
                 ImmutableItem item = ((DataItem) message).item;
-                System.out.println(item.getKey() + " , " + item.getValue() + " , " + item.getVersion());
+                if (item != null) {
+                    System.out.println(item.getKey() + " , " + item.getValue() + " , " + item.getVersion());
+                } else {
+                    System.out.println("Item with key " + key + " not present!");
+                }
                 getContext().stop(getSelf());
-            }
-            else if(message instanceof Terminated){
+            } else if (message instanceof Terminated) {
                 System.out.println(getSender() + " has successfully left the network");
                 getContext().stop(getSelf());
-            }
-            else if (message instanceof String){
+            } else if (message instanceof String) {
                 System.out.println(message);
                 getContext().stop(getSelf());
             } else {
