@@ -56,6 +56,9 @@ public class Client {
                     "client" // actor name
             );
         }
+        else{
+            System.out.println("Parameters don't match");
+        }
     }
 
     public static class ClientNode extends UntypedActor {
@@ -65,7 +68,7 @@ public class Client {
                 ActorSelection coordinator = context().actorSelection(remotePath);
                 
                 System.out.println("--- Sending " + operation
-                        + " request message to " + remotePath + " ---");
+                        + " request message to " + remotePath + " ---\n");
 
                 if (operation.equals("read")) {
                     coordinator.tell(new GetKey(key), getSelf());
