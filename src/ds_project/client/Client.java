@@ -1,6 +1,5 @@
 package ds_project.client;
 
-import akka.actor.ActorRef;
 import akka.actor.ActorSelection;
 import akka.actor.UntypedActor;
 import akka.actor.ActorSystem;
@@ -51,9 +50,8 @@ public class Client {
                 System.out.println("Wrong parameters for operation: " + args[3]);
             }
 
-            final ActorRef client = clientSystem.actorOf(
-                    Props.create(ClientNode.class), // actor class
-                    "client" // actor name
+            clientSystem.actorOf(Props.create(ClientNode.class), // actor class
+                "client" // actor name
             );
         }
         else{

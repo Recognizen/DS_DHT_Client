@@ -24,11 +24,10 @@ public class Messages {
             this.value = value;
             this.version = 0;
         }
-
         public Update(int keyId, String value, int version) {
             this.keyId = keyId;
             this.value = value;
-            this.version = version;
+            this.version = 0;
         }
     }
 
