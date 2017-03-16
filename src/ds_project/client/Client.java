@@ -86,7 +86,7 @@ public class Client {
             //When receiving a DataItem as response (richiesta Get)
             if (message instanceof DataItem) {
                 ImmutableItem item = ((DataItem) message).item;
-                if(item != null)
+                if(item != null && item.getVersion() != 0)
                     System.out.println(item.getKey() + " , " + item.getValue() + " , " + item.getVersion());
                 else
                     System.out.println("Item with key "+ key + " not present!");
